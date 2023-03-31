@@ -27,13 +27,13 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:android_version
 [core_version](https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlix-coroutines-core)
 [android_version](https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-android)
 
-## Suspend 
+## [Suspend](https://kotlinlang.org/docs/composing-suspending-functions.html) 
 Suspend function is a function that could be started, paused, and resume. means it doesn’t block the Thread, but release the Thread for the other coroutine to continue its work, and regain it back as the Thread is released.
 
 ![suspend-function-coroutines.png](https://amitshekhar.me/_next/image?url=%2Fstatic%2Fimages%2Fblog%2Fsuspend-function-coroutines.png&w=640&q=75)
 >Only allowed to be called from a coroutine or another suspend function
 
-## launch
+## [launch](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/launch.html)
 - Used to start the coroutines
 - returns a Job and does not carry any resulting value
 >it's like fire and forget
@@ -73,7 +73,7 @@ Suspend function is a function that could be started, paused, and resume. means 
 
 
 
-## async
+## [async](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/async.html)
 - Used to start the coroutines
 -  returns an instance of Deferred<T>, which has an await() function that returns the result of the coroutine
 >perform a task and return a result
@@ -101,7 +101,7 @@ Suspend function is a function that could be started, paused, and resume. means 
 //all 3 jobs will wait for each other to finish
 ```
 
-## runBlocking
+## [runBlocking](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/run-blocking.html)
 - Runs a new coroutine and blocks the current thread until its completion.
 - It is designed to actually write blocking code to libraries that are written in suspending style.
 - To be used in main functions and in tests.
@@ -133,7 +133,7 @@ runBlocking {
 //execute its child job & release that thread
 ```
 
-## withContext
+## [withContext](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/with-context.html)
 - Allows you to switch the context of a coroutine while preserving its job and continuation
 
 ```sh
@@ -151,18 +151,18 @@ CoroutineScope(Dispatchers.Main).launch {
 > As you can see, 
 before withContext it was running on main thread, but with the use of withContext it was running in worker thread-1 
 
-## Coroutine context
+## [Coroutine context](https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html)
 We have three types of context in Coroutines
-#### 1.Dispatchers.Main 
+#### [1.Dispatchers.Main](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-main.html) 
 This dispatcher is designed to be used with user interface elements in Android applications. It runs coroutines on the main thread.
 
-#### 2.Dispatchers. io
+#### [2.Dispatchers.io](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html)
 This dispatcher is optimized for performing IO operations, such as reading from or writing to a file or a network socket
 
-#### 3.Dispatchers.Default
+#### [3.Dispatchers.Default](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-default.html)
 This dispatcher is used by default if no other dispatcher is specified. It is backed by a shared pool of threads.
 
-## Job
+## [Job](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-job/)
 Every coroutine is associated with a job, which is created automatically when the coroutine is launched.
 ##### A coroutine job has several important properties:
 - It can be cancelled using `cancel()` method
@@ -193,7 +193,7 @@ scope.launch {
 //to tackle this scenario we have SupervisorJob().
 ```
 
-## SupervisorJob
+## [SupervisorJob](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-supervisor-job.html)
 
 if we use `SupervisorJob()` instead of `Job()` in above code,
 
@@ -206,27 +206,27 @@ API3 Response
 API1 failed
 API2 Response //for this time we have API2 response
 
-## Scope
+## [Scope](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/)
 
 A coroutine scope is an object that manages the lifecycle of a set of coroutines, that means coroutines launched in this scope will be cancelled when the scope is cancelled.
 
 ### Type of scopes
 
-**1.GlobalScope**
+**[1.GlobalScope](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-global-scope/)**
 This is a predefined coroutine scope that is available throughout the application.
 ```sh
 GlobalScope.launch {
     //task
 }
 ```
-**2.CoroutineScope**
+**[2.CoroutineScope](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope.html)**
 This is a custom coroutine scope that is created by the developer.
 ```sh
 CoroutineScope(Dispatchers.IO).launch{
     //task
 }
 ```
-**3.lifecycleScope**
+**[3.lifecycleScope](https://developer.android.com/topic/libraries/architecture/coroutines#lifecyclescope)**
 comes with [lifecycle ktx](https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-runtime-ktx?repo=google) & part of [Lifecycle-aware coroutine scopes](https://developer.android.com/topic/libraries/architecture/coroutines#lifecycle-aware)
 used in activity to launch a coroutine
 ```sh
@@ -234,7 +234,7 @@ used in activity to launch a coroutine
     //task
  }
 ```
-**4.viewModelScope**
+**[4.viewModelScope](https://developer.android.com/topic/libraries/architecture/coroutines#viewmodelscope)**
 comes with [lifecycle viewmodel ktx](https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-viewmodel-ktx) & part of [Lifecycle-aware coroutine scopes](https://developer.android.com/topic/libraries/architecture/coroutines#lifecycle-aware)
 used in ViewModel to lanch a coroutine
 ```sh
@@ -247,7 +247,7 @@ viewModelScope.launch {
 > Even though the lifecycleScope provides a proper way to cancel long-running operations automatically when the Lifecycle is DESTROYED.
 > You might want to collect a flow when the Lifecycle is STARTED and cancel the collection when it's STOPPED.
 
-**5.coroutineScope**
+**[5.coroutineScope](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/coroutine-scope.html)**
 When any child coroutine in this scope fails, this scope fails and all the rest of the children are cancelled.
 ```sh
 runBlocking {
@@ -272,7 +272,7 @@ runBlocking {
 ```
 > Note here API2 response isn't recorded. 
 
-**6.supervisorScope**
+**[6.supervisorScope](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/supervisor-scope.html)**
 Creates a CoroutineScope with SupervisorJob.
 a failure of a child does not cause this scope to fail and does not affect its other children,
 ```sh
@@ -298,7 +298,7 @@ runBlocking {
 //API2 Response     //for this time we have API2 response
 ```
 
-## suspendCoroutine
+## [suspendCoroutine](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.coroutines/suspend-coroutine.html)
 - Used for converting legacy callback methods to suspend function
 
 Suppose, we have legacy code like this,
@@ -326,7 +326,7 @@ runBlocking {
 }
 ```
 
-## suspendCancellableCoroutine
+## [suspendCancellableCoroutine](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/suspend-cancellable-coroutine.html)
 Like `suspendCoroutine`, `suspendCancellableCoroutine` provides a bridge between the coroutine world and the callback world but also provide the ability to cancel the coroutine.
 
 ```sh
@@ -349,3 +349,59 @@ runBlocking {
 }
 
 ```
+## [Unit testing coroutine](https://developer.android.com/kotlin/coroutines/test)
+#### UseCase - when we want to test “getting some data”
+Use `runBlocking{}` or `runBlockingTest{} ` 
+```sh
+//MyViewModel.kt
+suspend fun loadData(){
+    val data = networkRequest()
+    show(data)
+}
+
+@Test
+fun `Test loadData happy path`() = runBlocking {
+    val viewModel = MyViewModel()
+    viewModel.loadData()
+    //Assert show did something
+}
+```
+#### UseCase - when you want to launch coroutines
+```sh
+class MyViewModel(
+    private val dispatcher : CoroutineDispatcher
+){
+    val scope = CoroutineScope(Dispatcher.Main + SupervisorJob())
+    fun onButtonClick(){
+        scope.launch(dispatcher){
+            loadData()
+        }
+    }
+}
+
+//inside test class
+val testDispatcher = TestCoroutineDispatcher()
+
+@Test
+fun `Test onButtonClick() happy path`() = testDispatcher.runBlockingTest {
+    val viewModel = MyViewModel(testDispatcher)
+    viewModel.onButtonClick()
+    
+    //Assert show did something
+    
+    // you can pause execution using "testDispatcher.pauseDispatcher()"
+    // you can resume execution using "testDispatcher.resumeDispatcher()"
+}
+
+```
+
+
+#### Bonus tips
+> Coroutine by example
+> [1 single network call](https://gist.github.com/parthdesai1208/4639839d439a2ebd7b02c0ff45cf402c#file-single-network-call) 
+> [2 series network call](https://gist.github.com/parthdesai1208/4639839d439a2ebd7b02c0ff45cf402c#file-series-network-call) 
+> [3 Parallel network call](https://gist.github.com/parthdesai1208/4639839d439a2ebd7b02c0ff45cf402c#file-parallel-network-call) 
+> [4 Room](https://gist.github.com/parthdesai1208/4639839d439a2ebd7b02c0ff45cf402c#file-working-with-room)  
+> [5 Timeout](https://gist.github.com/parthdesai1208/4639839d439a2ebd7b02c0ff45cf402c#file-handle-timeout) 
+> [6 Long running task](https://gist.github.com/parthdesai1208/4639839d439a2ebd7b02c0ff45cf402c#file-long-running-task) 
+
